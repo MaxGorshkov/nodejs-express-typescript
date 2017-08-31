@@ -7,10 +7,12 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceRoot}\\bin\\www",
+            "name": "Launch",
+            "restart": true,
+            "program": "${workspaceRoot}\\node_modules\\grunt-cli\\bin\\grunt",
+            "args": ["debugVS"],
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}\\dist"
+            "outFiles": ["${workspaceRoot}\\dist\\**"]
         },
         {
             "type": "node",
@@ -19,18 +21,17 @@
             "port": 5858,
             "restart": true,
             "sourceMaps": true,
-            "outDir": "${workspaceRoot}\\dist"
+            "outFiles": ["${workspaceRoot}\\dist\\**"]
         },
         {
             "type": "node",
             "request": "launch",
 			"name": "Debug mocha tests",
 			"program": "${workspaceRoot}\\node_modules\\grunt-cli\\bin\\grunt",
-			"stopOnEntry": true,
             "args": ["test"],
             "sourceMaps": true,
 			"cwd": "${workspaceRoot}",
-			"outDir": "${workspaceRoot}\\test\\dist"
+			"outFiles": ["${workspaceRoot}\\dist\\**"]
 		}
     ]
 }

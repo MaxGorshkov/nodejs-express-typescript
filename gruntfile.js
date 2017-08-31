@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 
       concurrent: {
         dev: {
-          tasks: ['nodemon', 'watch'],
+          tasks: ['nodemon:debug', 'watch'],
           options: {
             logConcurrentOutput: true
           }
@@ -25,12 +25,18 @@ module.exports = function(grunt) {
       },
 
       nodemon: {
-        dev: {
+        debug: {
           script: './bin/www',
           options: {
             nodeArgs: ['--debug'],
           }
-        }
+        },
+        run: {
+          script: './bin/www',
+          options: {
+            nodeArgs: [],
+          }
+        },
       },
       
       ts: {
@@ -112,7 +118,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
   
     grunt.registerTask("default", [
-      "nodemon"
+      "nodemon:run"
+    ]);
+
+
+    grunt.registerTask("debugVS", [
+      "env:prod", "build", "nodemon:debug"
     ]);
 
     grunt.registerTask("debug", [

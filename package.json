@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "debug": "grunt debug --force",
+    "debug": "grunt debugVS --force",
     "release": "grunt release --force",
     "build": "grunt build --force",
     "start": "grunt --force",
