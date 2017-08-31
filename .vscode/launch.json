@@ -7,17 +7,23 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch",
+            "name": "Debug",
+            "runtimeExecutable": "npm.cmd",
+            "runtimeArgs": [
+                "run",
+                "debug"
+            ],
+            "port": 5858,
             "restart": true,
-            "program": "${workspaceRoot}\\node_modules\\grunt-cli\\bin\\grunt",
-            "args": ["debugVS"],
+            "protocol": "legacy",
             "sourceMaps": true,
+            "cwd": "${workspaceRoot}",
             "outFiles": ["${workspaceRoot}\\dist\\**"]
         },
         {
             "type": "node",
             "request": "attach",
-            "name": "Attach to Process",
+            "name": "Attach",
             "port": 5858,
             "restart": true,
             "sourceMaps": true,
@@ -31,7 +37,7 @@
             "args": ["test"],
             "sourceMaps": true,
 			"cwd": "${workspaceRoot}",
-			"outFiles": ["${workspaceRoot}\\dist\\**"]
+			"outFiles": ["${workspaceRoot}\\test\\dist\\**"]
 		}
     ]
 }
