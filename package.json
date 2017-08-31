@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "debug": "grunt debug --force",
+    "release": "grunt release --force",
     "build": "grunt build --force",
-    "start": "grunt --force"
+    "start": "grunt --force",
+    "test": "grunt test"
   },
   "dependencies": {
     "@types/express": "^4.0.37",
+    "@types/inversify":"^2.0.33",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
@@ -18,17 +21,27 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-ts": "^6.0.0-beta.16",
     "grunt-tslint": "^5.0.1",
+    "inversify": "^4.3.0",
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
     "path": "^0.12.7",
+    "reflect-metadata": "^0.1.10",
     "serve-favicon": "~2.4.2",
     "tslint": "^5.7.0",
     "typescript": "^2.4.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.42",
+    "chai": "^4.1.1",
+    "chai-http": "^3.0.0",
     "grunt": "^1.0.1",
     "grunt-concurrent": "^2.3.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-nodemon": "^0.4.2"
+    "grunt-env": "^0.4.4",
+    "grunt-mocha-test": "^0.13.2",
+    "grunt-nodemon": "^0.4.2",
+    "mocha": "^3.5.0",
+    "ts-node": "^3.3.0"
   }
 }

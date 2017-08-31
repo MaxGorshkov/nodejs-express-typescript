@@ -2,6 +2,19 @@ module.exports = function(grunt) {
     "use strict";
   
     grunt.initConfig({
+
+      env : {
+        dev : {
+          src : "./environment/dev.json",
+        },
+        prod : {
+          src : "./environment/prod.json",
+        },
+        test : {
+          src : "./environment/test.json",
+        },
+      },
+
       concurrent: {
         dev: {
           tasks: ['nodemon', 'watch'],
@@ -13,9 +26,13 @@ module.exports = function(grunt) {
 
       nodemon: {
         dev: {
-          script: './bin/www'
+          script: './bin/www',
+          options: {
+            nodeArgs: ['--debug'],
+          }
         }
       },
+      
       ts: {
         app: {
           files: [{
@@ -27,6 +44,23 @@ module.exports = function(grunt) {
             module: "commonjs",
             noLib: false,
             target: "es6",
+            moduleResolution: "node",
+            sourceMap: true,
+          }
+        },
+
+        test: {
+          files: [{
+            src: ["src/\*\*/\*.ts", 'test/**/*.ts'],
+            dest: "./test/dist"
+          },],
+          
+          options: {
+            rootDir: "",
+            module: 'commonjs',
+            noLib: false,
+            target: "es6",
+            moduleResolution: "node",
             sourceMap: true
           }
         }
@@ -44,7 +78,7 @@ module.exports = function(grunt) {
       watch: {
         ts: {
           files: ["js/src/\*\*/\*.ts", "src/\*\*/\*.ts", "src/\*\*/\*.jade", "src/\*\*/\*.css"],
-          tasks: ["ts", "tslint", "copy"]
+          tasks: ["ts:app", "tslint", "copy"]
         }
       },
 
@@ -56,6 +90,16 @@ module.exports = function(grunt) {
           dest: 'dist/static'
         },
       },
+
+      mochaTest: {
+        test: {
+          options: {
+            log: true,
+            run: true
+          },
+          src: ['test/**/*.js']
+        },
+      },
     });
   
     grunt.loadNpmTasks("grunt-contrib-watch");
@@ -64,17 +108,27 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-ts");
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks("grunt-tslint");
+    grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-mocha-test');
   
     grunt.registerTask("default", [
       "nodemon"
     ]);
 
     grunt.registerTask("debug", [
-      "concurrent"
+      "env:dev", "concurrent"
+    ]);
+
+    grunt.registerTask("release", [
+      "env:prod", "concurrent"
+    ]);
+
+    grunt.registerTask("test", [
+      "env:test", "ts:test",  "mochaTest"
     ]);
 
     grunt.registerTask("build", [
-      "ts", "tslint", "copy"
+      "ts:app", "tslint", "copy"
     ]);
   
   };

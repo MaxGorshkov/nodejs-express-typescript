@@ -1,16 +1,21 @@
+import { resolveDependency } from "../inversify.config";
 import {Router, Request, Response, NextFunction} from "express";
+import { IHeroService } from "../services/heroes/heroService";
 
-const heroes = [{name: "first", id: 1},
-{name: "second", id: 2}];
+class HeroRouting {
 
-class Hero {
-  constructor(public router: Router) {
-    this.router.get("/", this.get);
-  }
+  private service: IHeroService = resolveDependency<IHeroService>();
+  public router: Router = Router();
 
-  private get(req: Request, res: Response, next: NextFunction) {
-    res.send(heroes);
+  constructor() {
+    this.router.get("/", (req: Request, res: Response, next: NextFunction) => {
+      res.send(this.service.find());
+    });
+
+    this.router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
+      res.send(this.service.get(+req.params.id));
+    });
   }
 }
 
-export const heroRouter = (new Hero(Router())).router;
+export const heroRouter = (new HeroRouting()).router;
