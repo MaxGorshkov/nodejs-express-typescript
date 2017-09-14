@@ -106,6 +106,15 @@ module.exports = function(grunt) {
           src: ['test/**/*.js']
         },
       },
+
+      makeHistory:{
+        static: {
+          expand: true,
+          cwd: 'src/static',
+          src: ['**'],
+          dest: 'dist/static'
+        },
+      },
     });
   
     grunt.loadNpmTasks("grunt-contrib-watch");
@@ -116,6 +125,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-tslint");
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadTasks('dist/tasks');
   
     grunt.registerTask("default", [
       "nodemon:run"
@@ -141,5 +151,6 @@ module.exports = function(grunt) {
     grunt.registerTask("build", [
       "ts:app", "tslint", "copy"
     ]);
-  
+
+    grunt.registerTask("history", ["makeHistory"]);
   };

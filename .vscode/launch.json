@@ -25,6 +25,7 @@
             "request": "attach",
             "name": "Attach",
             "port": 5858,
+            "protocol": "legacy",
             "restart": true,
             "sourceMaps": true,
             "outFiles": ["${workspaceRoot}\\dist\\**"]
@@ -38,6 +39,16 @@
             "sourceMaps": true,
 			"cwd": "${workspaceRoot}",
 			"outFiles": ["${workspaceRoot}\\test\\dist\\**"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+			"name": "Debug history plugin",
+			"program": "${workspaceRoot}\\node_modules\\grunt-cli\\bin\\grunt",
+            "args": ["history", "--force"],
+            "sourceMaps": true,
+			"cwd": "${workspaceRoot}",
+			"outFiles": ["${workspaceRoot}\\dist\\**"]
 		}
     ]
 }

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "history": "grunt history",
     "debug": "grunt debugVS --force",
     "release": "grunt release --force",
     "build": "grunt build --force",
@@ -11,7 +12,8 @@
   },
   "dependencies": {
     "@types/express": "^4.0.37",
-    "@types/inversify":"^2.0.33",
+    "@types/inversify": "^2.0.33",
+    "@types/node": "^8.0.28",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
@@ -28,7 +30,9 @@
     "reflect-metadata": "^0.1.10",
     "serve-favicon": "~2.4.2",
     "tslint": "^5.7.0",
-    "typescript": "^2.4.2"
+    "typescript": "^2.4.2",
+    "pg": "^7.3.0",
+    "typeorm": "0.1.0-alpha.41"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
