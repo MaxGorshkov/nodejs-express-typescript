@@ -1,0 +1,12 @@
+[{"Schema" : "lui", 
+    "Name" : "Model1", 
+    "isHistoried" : true, 
+    "pathToModel": "../models/simplemodels/model1"},
+   { "Schema" : "bublic", 
+    "Name" : "Model2", 
+    "isHistoried" : true, 
+    "pathToModel": "../models/simplemodels/model2"},
+    { "Schema" : "lui", 
+        "Name" : "Model2", 
+        "isHistoried" : false, 
+        "pathToModel": "../models/simplemodels/model2"}]

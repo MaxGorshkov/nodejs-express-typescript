@@ -1,0 +1,41 @@
+{% for Name,data in data | groupby("Name")%}
+    {% for pathToModel,data in data | groupby("pathToModel")%}
+
+import { {{Name}} } from "{{pathToModel}}";
+import { h{{Name}} } from "{{historyPath}}";
+    {% endfor %}
+{%endfor%}
+import {createConnection, ConnectionOptions} from "typeorm";
+
+createDB();
+
+function createDB() {
+    let fs = require("fs");
+    var declar = fs.readFileSync("{{options.declarationPath}}","utf8");
+    var tables = JSON.parse(declar);
+    var postgreConnection;
+{% for Schema,data in data | groupby("Schema")%}
+        postgreConnection = createConnection({
+          driver : {
+          type : "{{options.type}}",
+          host : "{{options.host}}",
+          port : {{options.port}},
+          username : "{{options.username}}",
+          password : "{{options.password}}",
+          database : "{{options.database}}",
+          schemaName : "{{Schema}}"
+           },
+           autoSchemaSync: true ,
+           dropSchemaOnConnection: {{options.reCreate}},
+           entities: [
+           {% for Name,data in data | groupby("Name")%}
+           {{Name}},
+           {% for dat in data %}
+           {% if dat.isHistoried%}
+           h{{Name}},
+           {% endif %}
+           {%endfor%}
+           {% endfor%}]
+         });
+{% endfor %}
+}

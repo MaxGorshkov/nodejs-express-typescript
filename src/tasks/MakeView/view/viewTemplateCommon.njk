@@ -1,0 +1,33 @@
+{% if metafile.classes.length > 0  %}
+  {% for class in metafile.classes %}
+
+export class {{class.name}} {
+{% for field in class.fields %}
+  {% if  field.ignoredInView===false %}
+
+  public {{field.name}}: {{field.type}};
+  {% endif %}
+{% else %}
+{% endfor %}
+
+  constructor(model: any) {
+{% for field in class.fields %}
+  {% if  field.ignoredInView===false %}
+  {% if field.isComplexObj %}
+
+    this.{{field.name}} = JSON.parse(JSON.stringify(model.{{field.baseModelName}}));
+  {% elif field.isArray %}
+
+    this.{{field.name}} = JSON.parse(JSON.stringify(model.{{field.baseModelName}}));
+  {% else %}
+
+    this.{{field.name}} = model.{{field.baseModelName}};
+  {% endif %}
+{% endif %}
+{% else %}
+{% endfor %}
+}
+}
+{% else %}
+{% endfor %}
+{% endif %}

@@ -1,0 +1,34 @@
+{% if metafile.classes.length > 0  %}
+/*Codegen*/
+import {Entity, Column, PrimaryColumn, ColumnOptions, Index, PrimaryGeneratedColumn} from "typeorm";
+import "reflect-metadata";
+  {% for class in metafile.classes %}
+
+@Entity()
+export class h{{class.name}} {
+    @PrimaryColumn("int",{generated : true})
+    public __id?:number;
+
+    @Column()
+    public __operation:string;
+
+    @Column()
+    public __userId:number;
+
+    @Column("datetime")
+    public __changeDate:Date;
+{% for field in class.fields %}
+ {% if field.ignoredInHistory===false %}
+
+    @Column()
+    {% if field.generateIndex %}
+@Index()
+    {% endif %}
+public {{field.name}}:{{field.type}};
+  {% endif %}
+{% else %}
+{% endfor %}
+}
+  {% else %}
+  {% endfor %}
+{% endif %}

@@ -32,7 +32,8 @@
     "tslint": "^5.7.0",
     "typescript": "^2.4.2",
     "pg": "^7.3.0",
-    "typeorm": "0.1.0-alpha.41"
+    "typeorm": "0.1.0-alpha.41",
+    "nunjucks":"^3.0.1"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
