@@ -1,1 +1,0 @@
-src\app.ts src\inversify.config.ts src\models\heroes\hero.ts src\routes\heroes.ts src\routes\index.ts src\services\heroes\heroService.ts src\services\heroes\heroServiceMock.ts --sourcemap --removeComments --moduleResolution node --rootDir src --target ES6 --module commonjs --outDir ./dist

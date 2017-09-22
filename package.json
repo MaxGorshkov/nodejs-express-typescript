@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "history": "grunt history",
-    "debug": "grunt debugVS --force",
-    "release": "grunt release --force",
-    "build": "grunt build --force",
-    "start": "grunt --force",
+    "debug": "grunt debugVS",
+    "release": "grunt release",
+    "build": "grunt build",
+    "start": "grunt release",
     "test": "grunt test"
   },
   "dependencies": {
