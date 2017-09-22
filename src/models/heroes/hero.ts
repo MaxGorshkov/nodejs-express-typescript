@@ -6,7 +6,7 @@ import {GenerateView, IgnoreViewModel, ViewModelName} from "../../../src/tasks/m
 @GenerateHistory()
 @GenerateView("HeroViewModel")
 export class Hero {
-    @PrimaryColumn("int", { "generated": true })
+    @PrimaryColumn("int")
     @IgnoreViewModel()
     public id?: number;
     @Column("text")

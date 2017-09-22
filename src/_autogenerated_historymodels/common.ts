@@ -4,7 +4,7 @@ import "reflect-metadata";
   
 @Entity()
 export class hHero {
-    @PrimaryColumn("int",{generated : true})
+    @PrimaryColumn("int")
     public __id?:number;
 
     @Column()

@@ -1,6 +1,7 @@
 "use strict";
 
 import {parseStruct} from "./structure_parser/tsStructureParser";
+import {ArrayType, BasicType} from "./structure_parser/index";
 import {ClassMetadata} from "./model/classmetadata";
 import {FieldMetadata} from "./model/fieldmetadata";
 import {FileMetadata} from "./model/filemetadata";
@@ -63,24 +64,24 @@ function createMetadatas(files: any, grunt: any, obj: any) {
             }
             cls.fields.forEach(fld => {
                 let fldMetadata = new FieldMetadata();
-                if (fld.type.base !== undefined) {
+                if ((<ArrayType>fld.type).base !== undefined) {
                     fldMetadata.name = fld.name;
                     fldMetadata.baseModelName = fld.name;
                     var skobes = "[]";
                     fldMetadata.isArray = true;
-                    fldMetadata.type = fld.type.base.typeName;
-                    var curBase = fld.type.base;
-                    while (curBase.base !== undefined) {
-                        curBase = curBase.base;
-                        fldMetadata.type = curBase.typeName;
+                    fldMetadata.type = (<BasicType>(<ArrayType>fld.type).base).typeName;
+                    var curBase = (<ArrayType>fld.type).base;
+                    while ((<ArrayType>curBase).base !== undefined) {
+                        curBase = (<ArrayType>curBase).base;
+                        fldMetadata.type = (<BasicType>curBase).typeName;
                         skobes += "[]";
                     }
                     fldMetadata.type += skobes;
                 }else {
                     fldMetadata.name = fld.name;
                     fldMetadata.baseModelName = fld.name;
-                    fldMetadata.type = fld.type.typeName;
-                    var typeName = fld.type.typeName;
+                    fldMetadata.type = (<BasicType>fld.type).typeName;
+                    var typeName = (<BasicType>fld.type).typeName;
                     if (typeName !== "string" && typeName !== "number" && typeName !== "boolean" && typeName !== "undefined"
                 && typeName !== "null") {
                         fldMetadata.isComplexObj = true;
