@@ -25,17 +25,24 @@ export class {{class.name}} {
     this.{{field.name}} = JSON.parse(JSON.stringify(model.{{field.baseModelName}}));
 {% else %}
 
-    this.{{field.name}} = new {{field.type}} ( model.{{field.baseModelName}} );
+    if ( model.{{field.baseModelName}} ) {
+        this.{{field.name}} = new {{field.type}} ( model.{{field.baseModelName}} );
+    }
 {% endif %}
   {% elif field.isArray %}
 
-    this.{{field.name}} = model.{{field.baseModelName}}.map(function(item: any) {
-{% if  field.type === field.baseModelType %}
-      return JSON.parse(JSON.stringify(item));
-{% else %}
-      return new {{field.type}} ( item );
-{% endif %}
-    });
+    if ( model.{{field.baseModelName}} ) {
+      this.{{field.name}} = model.{{field.baseModelName}}.map(function(item: any) {
+  {% if  field.type === field.baseModelType %}
+        return JSON.parse(JSON.stringify(item));
+  {% else %}
+        if ( item ) {
+            return new {{field.type}} ( item );
+          }
+          return null;
+  {% endif %}
+      });
+    }
 
   {% else %}
 

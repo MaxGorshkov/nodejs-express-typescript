@@ -27,21 +27,32 @@ export class HeroViewModel {
         
     this.detail = JSON.parse(JSON.stringify(model.detail));
       
-    this.detailVM = new HeroDetailViewModel ( model.detailVM );
+    if ( model.detailVM ) {
+        this.detailVM = new HeroDetailViewModel ( model.detailVM );
+    }
       
-    this.details = model.details.map(function(item: any) {
-      return JSON.parse(JSON.stringify(item));
-    });
+    if ( model.details ) {
+      this.details = model.details.map(function(item: any) {
+          return JSON.parse(JSON.stringify(item));
+        });
+    }
 
       
-    this.detailsVM = model.detailsVM.map(function(item: any) {
-      return new HeroDetailViewModel ( item );
-    });
+    if ( model.detailsVM ) {
+      this.detailsVM = model.detailsVM.map(function(item: any) {
+          if ( item ) {
+            return new HeroDetailViewModel ( item );
+          }
+          return null;
+        });
+    }
 
       
-    this.simpleArray = model.simpleArray.map(function(item: any) {
-      return JSON.parse(JSON.stringify(item));
-    });
+    if ( model.simpleArray ) {
+      this.simpleArray = model.simpleArray.map(function(item: any) {
+          return JSON.parse(JSON.stringify(item));
+        });
+    }
 
   }
 }
