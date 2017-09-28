@@ -79,14 +79,25 @@ function createMetadatas(files: any, grunt: any, obj: any) {
                     fldMetadata.type = (<BasicType>fld.type).typeName;
                 }
 
+                let isDbColumn = false, isIgnoredInHistory = false;
                 fld.decorators.forEach(dec => {
                     if (dec.name === "IgnoredInHistory") {
-                        fldMetadata.ignoredInHistory = true;
+                        isIgnoredInHistory = true;
                     }
+
+                    if (dec.name === "Column") {
+                        isDbColumn = true;
+                    }
+
                     if (dec.name === "HistoryIndex") {
                         fldMetadata.generateIndex = true;
                     }
                 });
+
+                if (!isDbColumn || isIgnoredInHistory) {
+                    fldMetadata.ignoredInHistory = true;
+                }
+
                 classMet.fields.push(fldMetadata);
             });
             fileMet.classes.push(classMet);

@@ -1,11 +1,17 @@
 {% if metafile.classes.length > 0  %}
+/*Codegen*/
+{% for import in metafile.imports %}
+{{import|safe}}
+{% else %}
+{% endfor %}
+
   {% for class in metafile.classes %}
 
 export class {{class.name}} {
 {% for field in class.fields %}
   {% if  field.ignoredInView===false %}
 
-  public {{field.name}}: {{field.type}};
+  public {{field.name}}: {{field.type}}{% if field.isArray %} []{% endif %};
   {% endif %}
 {% else %}
 {% endfor %}
@@ -14,11 +20,23 @@ export class {{class.name}} {
 {% for field in class.fields %}
   {% if  field.ignoredInView===false %}
   {% if field.isComplexObj %}
+{% if  field.type === field.baseModelType %}
 
     this.{{field.name}} = JSON.parse(JSON.stringify(model.{{field.baseModelName}}));
+{% else %}
+
+    this.{{field.name}} = new {{field.type}} ( model.{{field.baseModelName}} );
+{% endif %}
   {% elif field.isArray %}
 
-    this.{{field.name}} = JSON.parse(JSON.stringify(model.{{field.baseModelName}}));
+    this.{{field.name}} = model.{{field.baseModelName}}.map(function(item: any) {
+{% if  field.type === field.baseModelType %}
+      return JSON.parse(JSON.stringify(item));
+{% else %}
+      return new {{field.type}} ( item );
+{% endif %}
+    });
+
   {% else %}
 
     this.{{field.name}} = model.{{field.baseModelName}};

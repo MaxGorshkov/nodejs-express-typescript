@@ -49,9 +49,11 @@ function createMetadatas(files: any, grunt: any, obj: any) {
         }
         var stringFile = grunt.file.read(file.src, options);
         var jsonStructure = parseStruct(stringFile, {}, file.src);
+
         jsonStructure.classes.forEach(cls => {
             let classMet = new ClassMetadata();
             classMet.name = cls.name;
+
             classMet.fields = new Array<FieldMetadata>();
             cls.decorators.forEach(dec => {
                 if (dec.name === "GenerateView") {
@@ -64,23 +66,19 @@ function createMetadatas(files: any, grunt: any, obj: any) {
             }
             cls.fields.forEach(fld => {
                 let fldMetadata = new FieldMetadata();
+
+                fldMetadata.baseModelName = fld.name;
+
                 if ((<ArrayType>fld.type).base !== undefined) {
-                    fldMetadata.name = fld.name;
-                    fldMetadata.baseModelName = fld.name;
-                    var skobes = "[]";
                     fldMetadata.isArray = true;
-                    fldMetadata.type = (<BasicType>(<ArrayType>fld.type).base).typeName;
+                    fldMetadata.baseModelType = (<BasicType>(<ArrayType>fld.type).base).typeName;
                     var curBase = (<ArrayType>fld.type).base;
                     while ((<ArrayType>curBase).base !== undefined) {
                         curBase = (<ArrayType>curBase).base;
-                        fldMetadata.type = (<BasicType>curBase).typeName;
-                        skobes += "[]";
+                        fldMetadata.baseModelType = (<BasicType>curBase).typeName;
                     }
-                    fldMetadata.type += skobes;
                 }else {
-                    fldMetadata.name = fld.name;
-                    fldMetadata.baseModelName = fld.name;
-                    fldMetadata.type = (<BasicType>fld.type).typeName;
+                    fldMetadata.baseModelType = (<BasicType>fld.type).typeName;
                     var typeName = (<BasicType>fld.type).typeName;
                     if (typeName !== "string" && typeName !== "number" && typeName !== "boolean" && typeName !== "undefined"
                 && typeName !== "null") {
@@ -88,12 +86,23 @@ function createMetadatas(files: any, grunt: any, obj: any) {
                     }
                 }
 
+                fldMetadata.name = fld.name;
+                fldMetadata.type = fldMetadata.baseModelType;
+
                 fld.decorators.forEach(dec => {
                     if (dec.name === "IgnoreViewModel") {
                         fldMetadata.ignoredInView = true;
                     }
                     if (dec.name === "ViewModelName") {
                         fldMetadata.name = dec.arguments[0].toString();
+                    }
+                    if (dec.name === "ViewModelType") {
+                        fldMetadata.type = dec.arguments[0].toString();
+                        let filename = dec.arguments[1].toString();
+                        let insertedImport = "import { " + fldMetadata.type + "} from \"" + filename + "\";";
+                        if (fileMet.imports.indexOf(insertedImport) === -1) {
+                            fileMet.imports.push(insertedImport);
+                        }
                     }
 
                 });

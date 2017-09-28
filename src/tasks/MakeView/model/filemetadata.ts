@@ -3,6 +3,10 @@ import "reflect-metadata";
 import {ClassMetadata} from "./classmetadata";
 
 export class FileMetadata {
-    public filename: string;
-    public classes: ClassMetadata[];
+
+    constructor (
+        public filename: string = null,
+        public classes: ClassMetadata[] = null,
+        public imports: string[] = []) {
+    }
 }

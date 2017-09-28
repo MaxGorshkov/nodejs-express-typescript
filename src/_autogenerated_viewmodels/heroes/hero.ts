@@ -1,3 +1,5 @@
+/*Codegen*/
+
   
 export class HeroViewModel {
     

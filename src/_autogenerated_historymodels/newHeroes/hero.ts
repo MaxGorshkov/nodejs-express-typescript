@@ -15,11 +15,11 @@ export class hHero {
 
     @Column("datetime")
     public __changeDate:Date;
- 
-    @Column()
-    public id:number;
-   
+  
     @Column()
     public name:string;
-  }
+    
+    @Column()
+    public detailId:number;
+       }
   
