@@ -101,7 +101,7 @@ module.exports = function(grunt) {
         },
       },
 
-      makeHistory:{
+      generateHistoryModel:{
         make:
         {
           files:[{
@@ -113,7 +113,8 @@ module.exports = function(grunt) {
         oneFile:false
         }
       },
-      makeView:{
+      
+      generateViewModel:{
         make:
         {
           files:[{
@@ -135,8 +136,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-tslint");
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-mocha-test');
-    grunt.loadTasks('dist/tasks/MakeHistory');
-    grunt.loadTasks('dist/tasks/MakeView');
+    grunt.loadNpmTasks('grunt-generate-view-model');
+    grunt.loadNpmTasks('grunt-generate-history-model');
+    
   
     grunt.registerTask("default", [
       "nodemon:run"
@@ -163,5 +165,5 @@ module.exports = function(grunt) {
       "ts:app", "tslint", "copy"
     ]);
 
-    grunt.registerTask("history", ["makeHistory", "makeView"]);
+    grunt.registerTask("history", ["generateHistoryModel", "generateViewModel"]);
   };

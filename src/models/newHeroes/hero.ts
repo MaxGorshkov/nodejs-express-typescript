@@ -1,6 +1,6 @@
 import {Entity, EmbeddableEntity, Embedded, Column, PrimaryColumn, Index} from "typeorm";
-import {GenerateHistory, HistoryIndex, IgnoredInHistory} from "../../../src/tasks/makeHistory/model/historyDecorator";
-import {GenerateView, IgnoreViewModel, ViewModelName, ViewModelType} from "../../../src/tasks/makeView/model/viewDecorators";
+import {GenerateHistory, HistoryIndex, IgnoredInHistory} from "grunt-generate-history-model";
+import {GenerateView, IgnoreViewModel, ViewModelName, ViewModelType} from "grunt-generate-view-model";
 import { HeroDetail } from "./heroDetail";
 
 @Entity()
