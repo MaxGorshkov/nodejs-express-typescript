@@ -1,25 +1,18 @@
-/*Codegen*/
 import {Entity, Column, PrimaryColumn, ColumnOptions, Index, PrimaryGeneratedColumn} from "typeorm";
 import "reflect-metadata";
   
 @Entity()
 export class hHero {
-    @PrimaryColumn("int")
-    public __id?:number;
+    @PrimaryGeneratedColumn()
+    public __id?: number;
 
     @Column()
-    public __operation:string;
+    public __operation: string;
 
+    @Column("date")
+    public __changedate: Date;
     @Column()
-    public __userId:number;
-
-    @Column("datetime")
-    public __changeDate:Date;
-  
+    public name: string;
     @Column()
-    public name:string;
-    
-    @Column()
-    public detailId:number;
-       }
-  
+    public detailId: number;
+}
